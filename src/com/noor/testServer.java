@@ -21,44 +21,25 @@ import com.sun.net.httpserver.HttpServer;
 public class testServer {
 
 	public static void main(String[] args) throws Exception {
-		//create server in order to associate server --> port is defined here (port,backlog)
-		HttpServer server = HttpServer.create(new InetSocketAddress(8300), 0);
-		server.createContext("/test", new wsHandler());
-		//excutor must be established before start
+		HttpServer server = HttpServer.create(new InetSocketAddress(8350), 0);
+		server.createContext("/", new wsHandler());
 		/*
 		 * All HTTP requests are handled in tasks given to the executor.
 		 */
-		server.createContext("/noor", new noorHandler());
 		server.setExecutor(null);
 		server.start();
-		
-		
-		
-
 	}
-	static class noorHandler implements HttpHandler{
-		@Override
-		public void handle(HttpExchange noor) throws IOException{
-			String response= "Mia Khalifa is sexy! <html><head></head><body><h2><a href=\"http://wwww.google.com\" target=\"_blank\">Mia Xalifa </a></h2></body></html>";
-			noor.sendResponseHeaders(200, response.getBytes().length);
-			OutputStream outstrNoor = noor.getResponseBody();
-			outstrNoor.write(response.getBytes());
-			outstrNoor.close();
-		}
-	}
+	
 	
 	
 	static class wsHandler implements HttpHandler{
 		 @Override
 		 public void handle(HttpExchange v) throws IOException{
-			 //return message for testuri 
 			 String response = "hello world!";
 			 v.sendResponseHeaders(200, response.getBytes().length);
 			 OutputStream outstr = v.getResponseBody();
 			 outstr.write(response.getBytes());
 			 outstr.close();
-			 outstr.flush();
-			 
 			 
 		 }
 	}
